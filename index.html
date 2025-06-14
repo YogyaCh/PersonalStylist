@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Personal Stylist - Body Shape & Color</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #fdf6f0; color: #333; }
+    h2 { color: #8b4513; }
+    label { display: block; margin-top: 1rem; }
+    select, button { margin-top: 0.5rem; padding: 0.5rem; font-size: 1rem; }
+    #result { margin-top: 2rem; padding: 1rem; background: #fff3cd; border: 1px solid #ffeeba; }
+  </style>
+</head>
+<body>
+  <h1>👗 AI Personal Stylist</h1>
+
+  <div style="background-color: #fef7f2; border: 1px solid #f2d2b3; border-radius: 10px; padding: 1.2rem; margin-bottom: 1.5rem;">
+    <h3 style="color: #8b4513;">📏 How to Measure for Body Shape</h3>
+    <img src="static/BodyShapeMeasures.png" alt="Body Measurement Guide" style="max-width: 10%; height: auto; border-radius: 8px; margin: 1rem 0;">
+    <ul style="padding-left: 1.2rem;">
+      <li><strong>Shoulders:</strong> Measure around the fullest part of your shoulders, just above your armpits.</li>
+      <li><strong>Bust:</strong> Measure across the fullest part of your chest, typically over the nipple line.</li>
+      <li><strong>Waist:</strong> Measure the narrowest part of your torso, usually above your belly button.</li>
+      <li><strong>Hips:</strong> Measure around the widest part of your hips and bottom.</li>
+    </ul>
+    <p style="font-size: 0.95rem; color: #555;">Tip: Stand straight and use a soft measuring tape for accuracy.</p>
+  </div>
+
+  <h2>1. Body Shape Questionnaire</h2>
+  <label>Shoulders vs Hips</label>
+  <select id="shoulder_hip_ratio">
+    <option value="equal">Equal</option>
+    <option value="shoulders_wider">Shoulders wider</option>
+    <option value="hips_wider">Hips wider</option>
+  </select>
+
+  <label>Waist Definition</label>
+  <select id="waist_definition">
+    <option value="defined">Well-defined</option>
+    <option value="slight">Slightly defined</option>
+    <option value="none">Not defined</option>
+  </select>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <div style="background-color: #fff6f0; padding: 1.5rem; border-radius: 10px; border: 1px solid #ffd9c0; font-family: 'Arial', sans-serif; color: #4b2e2e;">
+    <p>✨ <strong>Ever wondered why certain colors make you glow while others fall flat?</strong> The secret lies in your <strong>skin’s undertone</strong> — the subtle layer of color beneath your skin that affects how shades look on you. While your visible skin tone (called your <strong>overtone</strong>) ranges from fair to deep and varies by ethnicity or sun exposure, your <strong>undertone</strong> stays the same and is the key to finding colors that truly flatter you.</p>
+    <p><strong>Undertones come in three main types:</strong></p>
+    <ul>
+      <li><strong>Warm</strong> – golden or yellow hues, like a mossy green</li>
+      <li><strong>Cool</strong> – bluish hues, like grass green</li>
+      <li><strong>Neutral</strong> – a balance, often with a soft red base</li>
+    </ul>
+
+    <p>💍 <strong>Not sure where you fall?</strong> Try the classic <strong>Metal Test</strong>:</p>
+    <ul>
+      <li>If gold jewelry makes your skin glow, you're likely <strong>warm-toned</strong>.</li>
+      <li>If silver looks better, you’re <strong>cool-toned</strong>.</li>
+      <li>If both look great, you probably have <strong>neutral undertones</strong>.</li>
+    </ul>
+
+    <p>Knowing your undertone helps you choose the most flattering clothes, makeup, and hair colors — it’s like unlocking your personal color code! 🎨💖</p>
+  </div>
+
+  <h2>2. Undertone Detection (Metal Test)</h2>
+  <label>Which metal suits you better?</label>
+  <select id="metal_test">
+    <option value="gold">Gold</option>
+    <option value="silver">Silver</option>
+    <option value="both">Both</option>
+  </select>
+
+  <h2>3. Eye & Hair Color</h2>
+  <label>Eye Color</label>
+  <select id="eye_color">
+    <option value="blue">Blue</option>
+    <option value="green">Green</option>
+    <option value="brown">Brown</option>
+    <option value="hazel">Hazel</option>
+  </select>
+
+  <label>Hair Color</label>
+  <select id="hair_color">
+    <option value="ash_blonde">Ash Blonde</option>
+    <option value="golden_blonde">Golden Blonde</option>
+    <option value="brown">Brown</option>
+    <option value="auburn">Auburn</option>
+    <option value="black">Black</option>
+  </select>
+  <button onclick="getStyleAdvice()">Get My Styling Profile</button>
+  <div>
+  <img src="static/SeasonColor.png" alt="Seasonal Color Palette Chart" style="max-width: 50%; border-radius: 8px; margin: 1rem 0;">
+  </div>
+
+  <div id="result"></div>
+
+  <script>
+    function getBodyShape(shoulderHip, waistDef) {
+      if (shoulderHip === 'equal') {
+        if (waistDef === 'defined') return 'Hourglass';
+        else return 'Rectangle';
+      } else if (shoulderHip === 'hips_wider') {
+        return 'Pear';
+      } else if (shoulderHip === 'shoulders_wider') {
+        return 'Inverted Triangle';
+      } else {
+        return 'Apple';
+      }
+    }
+
+    function getUndertoneFromMetal(metal) {
+      if (metal === 'gold') return 'warm';
+      else if (metal === 'silver') return 'cool';
+      else return 'neutral';
+    }
+
+    function getColorPalette(undertone, eye, hair) {
+      if (undertone === 'cool') {
+        if ((hair === 'ash_blonde' || hair === 'black') && eye === 'blue') return 'Summer';
+        return 'Winter';
+      } else if (undertone === 'warm') {
+        if ((hair === 'golden_blonde' || hair === 'auburn') && (eye === 'green' || eye === 'hazel')) return 'Spring';
+        return 'Autumn';
+      } else {
+        return 'Neutral (Need more info)';
+      }
+    }
+
+    function getStyleAdvice() {
+      const shoulderHip = document.getElementById('shoulder_hip_ratio').value;
+      const waistDef = document.getElementById('waist_definition').value;
+      const metal = document.getElementById('metal_test').value;
+      const eye = document.getElementById('eye_color').value;
+      const hair = document.getElementById('hair_color').value;
+
+      const shape = getBodyShape(shoulderHip, waistDef);
+      const undertone = getUndertoneFromMetal(metal);
+      const palette = getColorPalette(undertone, eye, hair);
+
+      document.getElementById('result').innerHTML = `
+        <h2>🎯 Your Styling Profile</h2>
+        <p><strong>Body Shape:</strong> ${shape}</p>
+        <p><strong>Undertone:</strong> ${undertone}</p>
+        <p><strong>Color Season:</strong> ${palette}</p>
+        <p><em>Tip: Try styling guides for your shape and season to look your best!</em></p>
+      `;
+    }
+  </script>
+</body>
+</html>
